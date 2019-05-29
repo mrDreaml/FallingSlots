@@ -10,6 +10,18 @@ module.exports = {
                 use: 'ts-loader',
                 exclude: /node_modules/,
             },
+            {
+                test: /\.(png|woff|woff2|eot|ttf|svg|gif)$/,
+                loader: 'url-loader?limit=100000'
+            },
+            {
+                test: /\.scss$/,
+                use: [
+                    "style-loader",
+                    "css-loader",
+                    "sass-loader"
+                ]
+            }
         ],
     },
     resolve: {

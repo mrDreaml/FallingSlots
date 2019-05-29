@@ -1,14 +1,19 @@
 import * as PIXI from 'pixi.js'
+const gameSprite = require('./img/bunny.png');
 
 export default (): void => {
-    const app = new PIXI.Application();
+    const { innerWidth, innerHeight } = window;
+    const app = new PIXI.Application({
+        width: innerWidth,
+        height: innerHeight,
+    });
 
     // The application will create a canvas element for you that you
     // can then insert into the DOM
     document.body.appendChild(app.view);
 
     // load the texture we need
-    app.loader.add('bunny', 'bunny.png').load((loader: any, resources: any): void => {
+    app.loader.add('bunny', gameSprite).load((loader: any, resources: any): void => {
         // This creates a texture from a 'bunny.png' image
         const bunny = new PIXI.Sprite(resources.bunny.texture);
 
