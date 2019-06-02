@@ -1,5 +1,8 @@
 const webpack = require('webpack');
 const path = require('path');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
     entry: './src/index.ts',
@@ -21,7 +24,7 @@ module.exports = {
                     "css-loader",
                     "sass-loader"
                 ]
-            }
+            },
         ],
     },
     resolve: {
@@ -34,6 +37,11 @@ module.exports = {
     },
     plugins: [
         new webpack.HotModuleReplacementPlugin(),
+        new CleanWebpackPlugin(),
+        new HtmlWebpackPlugin(),
+        new CopyPlugin([
+            { from: 'src/data', to: 'data' },
+        ])
     ],
     mode: 'development',
     devtool: 'inline-source-map',
