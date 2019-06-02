@@ -5,7 +5,7 @@ import fallSymbolBoxEvent from './fallSymbolBoxEvent';
 
 const textureMapPath = 'gameSprite';
 const nextFallingDelay = 200; // ms
-interface SymbolBoxWithID extends PIXI.Sprite {
+interface SpriteWithID extends PIXI.Sprite {
     id: number;
 }
 
@@ -21,7 +21,7 @@ export default class Reel {
     private reelContainer: PIXI.Container = new PIXI.Container(); 
     private quantityOfSymbolBox: number = 3;
 
-    private fallSymbol(currentSymbolBox: SymbolBoxWithID): void {
+    private fallSymbol(currentSymbolBox: SpriteWithID): void {
         fallSymbolBoxEvent(this.app.ticker, this.reelContainer, currentSymbolBox, this.floor.y);
     }
 
