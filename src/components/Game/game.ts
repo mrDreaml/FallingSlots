@@ -1,5 +1,7 @@
 import * as PIXI from 'pixi.js'
-import Reel from '../reel/reel';
+
+import Slot from '../slot/slot';
+
 export default (): void => {
     const app = new PIXI.Application({
         width: 1519,
@@ -16,15 +18,16 @@ export default (): void => {
         const gameScene = new PIXI.Container();
 
         const floor =  new PIXI.Sprite(app.loader.resources[textureMapPath].textures['floor.png']);
-        floor.y = app.screen.height - floor.height;
         gameScene.addChild(floor);
+        floor.y = app.screen.height - floor.height;
 
         const header = new PIXI.Sprite(app.loader.resources[textureMapPath].textures['header.png']);
         gameScene.addChild(header);
-
-        const Reel1 = new Reel(app, floor);
-        gameScene.addChild(Reel1.getReelContainer);
-        Reel1.SymbolsUp();
+        
+        const slot = new Slot(app, floor);
+        slot.slotContainer.x = 100;
+        slot.symbolsUp();
+        gameScene.addChild(slot.slotContainer);
 
         app.stage.addChild(gameScene);
     });
