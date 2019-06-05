@@ -1,7 +1,7 @@
-import getFallingSpeed from '../../entity/getFallingSpeed';
+import getFallingSpeed from './getFallingSpeed';
 import setSymbolBoxBalance from './setSymbolBoxBalanceEvent';
 
-export default (ticker: PIXI.Ticker, reelContainer: PIXI.Container, currentSymbolBox: PIXI.Sprite, floorY: number): Promise<void> => {
+export default (ticker: PIXI.Ticker, currentSymbolBox: PIXI.Sprite, floorY: number): Promise<void> => {
     return new Promise((resolve): void => {
         const startYPosition = currentSymbolBox.y;
         let speed = 0;
