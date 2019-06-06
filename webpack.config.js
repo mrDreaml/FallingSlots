@@ -14,6 +14,10 @@ module.exports = {
                 exclude: /node_modules/,
             },
             {
+                test: /\.mp3$/,
+                loader: 'file-loader'
+            },
+            {
                 test: /\.(png|woff|woff2|eot|ttf|svg|gif)$/,
                 loader: 'url-loader?limit=100000'
             },

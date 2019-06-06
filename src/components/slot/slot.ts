@@ -11,16 +11,18 @@ enum SymbolsState {
 }
 
 export default class Slot {
-    public constructor(textures: PIXI.ITextureDictionary, ticker: PIXI.Ticker, floor: PIXI.Sprite, quantityOfReels = 5) {
+    public constructor(textures: PIXI.ITextureDictionary, ticker: PIXI.Ticker, floor: PIXI.Sprite, sounds: Record<string, string>, quantityOfReels = 5) {
         this.textures = textures;
         this.ticker = ticker;
-        this.floor = floor; //  On that elemnt symbols will fall  
+        this.floor = floor; //  On that elemnt symbols will fall
+        this.sounds = sounds;
         this.quantityOfReels = quantityOfReels;
     }
 
     private textures: PIXI.ITextureDictionary;
     private ticker: PIXI.Ticker;
     private floor: PIXI.Sprite;
+    private sounds: Record<string, string>;
     private container: PIXI.Container = new PIXI.Container;
     private reelContainer: Reel[] = [];
     private quantityOfReels: number;
@@ -31,7 +33,7 @@ export default class Slot {
             if (this.state === SymbolsState.readyToUp) {
                 this.state = SymbolsState.falling;
                 for (let i = 0; i < this.quantityOfReels; i++) {
-                    const reel = new Reel(this.textures, this.ticker,this.floor);
+                    const reel = new Reel(this.textures, this.ticker,this.floor, this.sounds);
                     const { reelContainer } = reel;
                     reelContainer.x = reel.symbolWidth * i;
                     setTimeout((): void => {

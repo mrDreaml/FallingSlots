@@ -1,16 +1,19 @@
 import * as PIXI from 'pixi.js'
 import generateSymbol from '../../entity/generateSymbol';
 import fallSymbolBoxEvent from '../../entity/fallSymbolBoxEvent';
+import generateSound from '../../entity/generateSound';
+import 'howler';
 
 const nextFallingDelay = 200; // ms
 
 
 
 export default class Reel {
-    public constructor(textures: PIXI.ITextureDictionary, ticker: PIXI.Ticker, floor: PIXI.Sprite, quantityOfSymbolBox = 3) {
+    public constructor(textures: PIXI.ITextureDictionary, ticker: PIXI.Ticker, floor: PIXI.Sprite, sounds: Record<string, string>, quantityOfSymbolBox = 3) {
         this.textures = textures;
         this.ticker = ticker;
-        this.floor = floor; //  On that elemnt symbols will fall  
+        this.floor = floor; //  On that elemnt symbols will fall
+        this.sounds = sounds; 
         this.container.mask = new PIXI.Sprite(PIXI.Texture.WHITE);
         this.quantityOfSymbolBox = quantityOfSymbolBox;
     }
@@ -18,6 +21,7 @@ export default class Reel {
     private textures: PIXI.ITextureDictionary;
     private ticker: PIXI.Ticker;
     private floor: PIXI.Sprite;
+    private sounds: Record<string, string>;
     private container: PIXI.Container = new PIXI.Container();
     private reelSpriteContainer: PIXI.Sprite[] = [];
     private quantityOfSymbolBox: number;
@@ -46,10 +50,13 @@ export default class Reel {
                 symbolBox.anchor.x = 0.5;
                 symbolBox.anchor.y = 0.5;
                 symbolBox.rotation = Math.floor(Math.random() * 8) / 100;
-    
+                const sound = new Howl({
+                    src: [this.sounds[generateSound(this.sounds, 'ReelStop')]]
+                });
     
                 setTimeout((): void => {
                     fallSymbolBoxEvent(this.ticker, symbolBox, floor).then((): void => {
+                        sound.play();
                         if (i === this.quantityOfSymbolBox) {
                             resolve(); // last simbole landed
                         }

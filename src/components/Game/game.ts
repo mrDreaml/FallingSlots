@@ -2,6 +2,7 @@ import * as PIXI from 'pixi.js'
 
 import Slot from '../slot/slot';
 import spinButton from '../spinButton/spinButton';
+import sounds from '../../data/sounds/sounds';
 
 export default (): void => {
     const app = new PIXI.Application({
@@ -26,11 +27,11 @@ export default (): void => {
         const header = new PIXI.Sprite(textures['header.png']);
         gameScene.addChild(header);
         
-        const slot = new Slot(textures, app.ticker, floor);
+        const slot = new Slot(textures, app.ticker, floor, sounds);
         slot.slotContainer.x = 100;
         gameScene.addChild(slot.slotContainer);
 
-        const spinButtonView = spinButton(textures, slot);
+        const spinButtonView = spinButton(textures, slot, sounds);
         spinButtonView.x = app.view.width - spinButtonView.width;
         spinButtonView.y = app.view.height / 2 - spinButtonView.height / 2;
         gameScene.addChild(spinButtonView);
