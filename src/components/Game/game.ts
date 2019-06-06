@@ -34,6 +34,7 @@ export default (): void => {
         spinButtonView.x = app.view.width - spinButtonView.width;
         spinButtonView.y = app.view.height / 2 - spinButtonView.height / 2;
         gameScene.addChild(spinButtonView);
+
         app.stage.addChild(gameScene);
     });
 }

@@ -7,19 +7,20 @@ const nextFallingDelay = 200; // ms
 
 
 export default class Reel {
-    public constructor(textures: PIXI.ITextureDictionary, ticker: PIXI.Ticker, floor: PIXI.Sprite) {
+    public constructor(textures: PIXI.ITextureDictionary, ticker: PIXI.Ticker, floor: PIXI.Sprite, quantityOfSymbolBox = 3) {
         this.textures = textures;
         this.ticker = ticker;
         this.floor = floor; //  On that elemnt symbols will fall  
-        this.reelContainer.mask = new PIXI.Sprite(PIXI.Texture.WHITE);
+        this.container.mask = new PIXI.Sprite(PIXI.Texture.WHITE);
+        this.quantityOfSymbolBox = quantityOfSymbolBox;
     }
 
     private textures: PIXI.ITextureDictionary;
     private ticker: PIXI.Ticker;
     private floor: PIXI.Sprite;
-    public reelContainer: PIXI.Container = new PIXI.Container();
+    private container: PIXI.Container = new PIXI.Container();
     private reelSpriteContainer: PIXI.Sprite[] = [];
-    private quantityOfSymbolBox: number = 3;
+    private quantityOfSymbolBox: number;
 
 
     private get getSymbolBox(): PIXI.Sprite {
@@ -34,7 +35,7 @@ export default class Reel {
 
     public symbolsUp(): Promise<void> {
         return new Promise((resolve): void => {
-            this.reelContainer.mask = null;
+            this.container.mask = null;
             let floor = this.floor.y;
             for (let i = 1; i <= this.quantityOfSymbolBox; i++) {
                 const symbolBox = this.getSymbolBox;
@@ -56,7 +57,7 @@ export default class Reel {
                     floor -= symbolBox.height;  // floor for next symbol will be that symbol
                 }, nextFallingDelay * i + Math.floor(Math.random() * 50));
     
-                this.reelContainer.addChild(symbolBox);
+                this.container.addChild(symbolBox);
                 this.reelSpriteContainer.push(symbolBox);
             }
         });
@@ -78,13 +79,17 @@ export default class Reel {
                         if (i + 1 === this.quantityOfSymbolBox) {
                             resolve();  // last simbole landed
                             this.reelSpriteContainer = [];
-                            this.reelContainer.mask = new PIXI.Sprite(PIXI.Texture.WHITE);
+                            this.container.mask = new PIXI.Sprite(PIXI.Texture.WHITE);
                         }
                     });
                 }, nextFallingDelay * i / 2 + Math.floor(Math.random() * 50));
     
             }
         });
+    }
+
+    public get reelContainer(): PIXI.Container {
+        return this.container;
     }
 
 };

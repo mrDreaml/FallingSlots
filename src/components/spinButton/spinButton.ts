@@ -17,25 +17,29 @@ enum SymbolsState {
 export default (textures: PIXI.ITextureDictionary, slot: Slot): PIXI.Sprite => {
     let checkedButtonViewState = buttonViewStates.normal;
     let btnIsOver = false;
-    let buttonView = new PIXI.Sprite(textures[checkedButtonViewState]);
+    const buttonView = new PIXI.Sprite(textures[checkedButtonViewState]);
     buttonView.interactive = true;
+
+
     buttonView.addListener('mouseover', (): void => {
         btnIsOver = true;
         buttonView.texture = textures[buttonViewStates.hover];
     });
+
     buttonView.addListener('mouseout', (): void => {
         btnIsOver = false;
         buttonView.texture = textures[checkedButtonViewState];
     });
+
     buttonView.addListener('click', (): void => {
         const { currentState } = slot;
         if (currentState !== SymbolsState.falling) {
             let slotEventName;
             if (currentState === SymbolsState.readyToUp) {
-                slotEventName = slot.symbolsUp();
+                slotEventName = slot.reelsUp();
             }
             if (currentState === SymbolsState.readyToDrop) {
-                slotEventName = slot.symbolsDrop();
+                slotEventName = slot.reelsDrop();
             }
             if (slotEventName) {
                 slotEventName.then((): void => {
@@ -49,5 +53,6 @@ export default (textures: PIXI.ITextureDictionary, slot: Slot): PIXI.Sprite => {
             }
         }
     });
+
     return buttonView;
 }

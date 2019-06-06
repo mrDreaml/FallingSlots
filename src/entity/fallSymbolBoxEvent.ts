@@ -5,7 +5,7 @@ export default (ticker: PIXI.Ticker, currentSymbolBox: PIXI.Sprite, floorY: numb
     return new Promise((resolve): void => {
         const startYPosition = currentSymbolBox.y;
         let speed = 0;
-        const fallingEvent = (delta: number): any => {
+        const fallingEvent = (delta: number): void => {
             speed = getFallingSpeed(0, 25, (currentSymbolBox.y - startYPosition) / 100);
             currentSymbolBox.y += speed + delta;
             if (currentSymbolBox.y + currentSymbolBox.height >= floorY) {

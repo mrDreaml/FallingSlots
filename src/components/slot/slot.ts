@@ -11,21 +11,22 @@ enum SymbolsState {
 }
 
 export default class Slot {
-    public constructor(textures: PIXI.ITextureDictionary, ticker: PIXI.Ticker, floor: PIXI.Sprite) {
+    public constructor(textures: PIXI.ITextureDictionary, ticker: PIXI.Ticker, floor: PIXI.Sprite, quantityOfReels = 5) {
         this.textures = textures;
         this.ticker = ticker;
         this.floor = floor; //  On that elemnt symbols will fall  
+        this.quantityOfReels = quantityOfReels;
     }
 
     private textures: PIXI.ITextureDictionary;
     private ticker: PIXI.Ticker;
     private floor: PIXI.Sprite;
-    public slotContainer: PIXI.Container = new PIXI.Container;
+    private container: PIXI.Container = new PIXI.Container;
     private reelContainer: Reel[] = [];
-    private quantityOfReels: number = 5;
+    private quantityOfReels: number;
     private state = SymbolsState.readyToUp;
 
-    public symbolsUp(): Promise<void> {
+    public reelsUp(): Promise<void> {
         return new Promise((resolve): void => {
             if (this.state === SymbolsState.readyToUp) {
                 this.state = SymbolsState.falling;
@@ -40,7 +41,7 @@ export default class Slot {
                                 resolve();
                             }
                         });
-                        this.slotContainer.addChild(reelContainer);
+                        this.container.addChild(reelContainer);
                     }, nextReelEventDelay * i + Math.floor(Math.random() * 50));
                     this.reelContainer.push(reel);
                 }
@@ -48,7 +49,7 @@ export default class Slot {
         });
     }
 
-    public symbolsDrop(): Promise<void> {
+    public reelsDrop(): Promise<void> {
         return new Promise((resolve): void => {
             if (this.state === SymbolsState.readyToDrop) {
                 this.state = SymbolsState.falling;
@@ -70,6 +71,10 @@ export default class Slot {
 
     public get currentState(): string {
         return this.state;
+    }
+
+    public get slotContainer(): PIXI.Container {
+        return this.container;
     }
 
 };
