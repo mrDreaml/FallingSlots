@@ -1,4 +1,4 @@
 import './styles/index.scss';
-import Game from './components/game/game';
+import Game from './components/game';
 
 Game();

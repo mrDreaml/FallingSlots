@@ -1,7 +1,7 @@
 import * as PIXI from 'pixi.js'
 
-import Slot from '../slot/slot';
-import spinButton from '../spinButton/spinButton';
+import Slot from '../slot';
+import spinButton from '../spinButton';
 import sounds from '../../data/sounds/sounds';
 
 export default (): void => {
