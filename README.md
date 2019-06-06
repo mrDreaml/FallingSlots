@@ -18,4 +18,4 @@ to install: `npm i`
 to run: `npm run start`
 
 ## Application
-link to ready app (https://)
+link to ready app (https://confident-knuth-615b55.netlify.com/)
