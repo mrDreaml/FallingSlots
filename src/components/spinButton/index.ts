@@ -1,5 +1,5 @@
 import * as PIXI from 'pixi.js'
-import Slot from '../slot/slot';
+import Slot from '../slot';
 import 'howler';
 
 

@@ -1,5 +1,5 @@
 import * as PIXI from 'pixi.js'
-import Reel from '../reel/reel';
+import Reel from '../reel';
 
 const nextReelEventDelay = 200; // ms
 
